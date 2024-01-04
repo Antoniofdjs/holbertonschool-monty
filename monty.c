@@ -39,6 +39,7 @@ int main(int argc, char **argv)
 	stack_t **stack;
 	instruction_t instructions[] = {
 		{"push", push},
+		{"pop", pop},
 		{"pall", pall}, {NULL, NULL}
 	};
 	if (argc != 2 || argv[1] == NULL)

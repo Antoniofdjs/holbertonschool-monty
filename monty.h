@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <stdio.h>
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -39,4 +40,5 @@ void free_array(char **args);
 void push(stack_t **stack, unsigned int line_number, char **args, char *line, FILE *file);
 void pall(stack_t **stack, unsigned int line_number, char **args, char *line, FILE *file);
 void free_dlist(stack_t **head);
+void pop(stack_t **stack, unsigned int line_number, char **args, char *line, FILE *file);
 #endif /* MONTY_H */

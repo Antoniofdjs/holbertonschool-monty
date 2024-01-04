@@ -1,6 +1,33 @@
 #include <stdio.h>
 #include "monty.h"
 
+#include "monty.h"
+/**
+ *pop - function that removes the top element of the stack
+ *@stack: head of list
+ *@line_number: line number of the file
+ *@line: string from lines
+ *@file: file set as upstream of getline
+ */
+void pop(stack_t **stack, unsigned int line_number, char **args, char *line, FILE *file)
+{
+        stack_t *temp = NULL;
+
+        if (*stack == NULL || stack == NULL)
+        {
+                printf("L%d: can't pop an empty stack", line_number);
+		free_array(args);
+                clean_up(line, stack, file);
+                exit(EXIT_FAILURE);
+        }
+        if (stack != NULL)
+        {
+                temp = *stack;
+                *stack = (*stack)->next;
+                free(temp);
+        }
+}
+
 /**
  * push - Add node to the start of stack double list
  *
