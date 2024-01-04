@@ -9,23 +9,20 @@
  *@line: string from lines
  *@file: file set as upstream of getline
  */
-void pop(stack_t **stack, unsigned int line_number, char **args, char *line, FILE *file)
+void pop(stack_t **stack, unsigned int line_number, char *line, FILE *file)
 {
-        stack_t *temp = NULL;
+	stack_t *temp = NULL;
 
-        if (*stack == NULL || stack == NULL)
-        {
-                printf("L%d: can't pop an empty stack", line_number);
-		free_array(args);
-                clean_up(line, stack, file);
-                exit(EXIT_FAILURE);
-        }
-        if (stack != NULL)
-        {
-                temp = *stack;
-                *stack = (*stack)->next;
-                free(temp);
-        }
+	if (*stack == NULL || stack == NULL)
+	{
+		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
+		clean_up(line, stack, file);
+		exit(EXIT_FAILURE);
+	}
+
+	temp = *stack;
+	*stack = (*stack)->next;
+	free(temp);
 }
 
 /**

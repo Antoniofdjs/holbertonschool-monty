@@ -30,6 +30,7 @@ int main(int argc, char **argv)
 	instruction_t instructions[] = {
 		{"push", push},
 		{"pall", pall},
+		{"pop", pop},
 		{NULL, NULL}
 	};
 	if (argc != 2 || argv[1] == NULL)
