@@ -21,7 +21,7 @@ int white_spaces(char **args, unsigned int line_number)
  */
 void arg_validation(void)
 {
-	printf("USAGE: monty file\n");
+	fprintf(stderr, "USAGE: monty file\n");
 	exit(EXIT_FAILURE); }
 
 	/**
@@ -32,14 +32,16 @@ void arg_validation(void)
 int main(int argc, char **argv)
 {
 	unsigned int line_number = 0;
-	char *line = NULL, **args;
+	char *line = NULL;
 	size_t len = 0, i;
 	FILE *file;
+	char *opcode;
 
 	stack_t **stack;
 	instruction_t instructions[] = {
 		{"push", push},
-		{"pall", pall}, {NULL, NULL}
+		{"pall", pall},
+		{NULL, NULL}
 	};
 	if (argc != 2 || argv[1] == NULL)
 		arg_validation();
@@ -48,7 +50,7 @@ int main(int argc, char **argv)
 	file = fopen(argv[1], "r");/* read monty.m file */
 	if (file == NULL)
 	{
-		fprintf(stderr, "Error: Can't open file <%s>\n", argv[1]);
+		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		free(stack);
 		exit(EXIT_FAILURE);
 	}
@@ -56,28 +58,25 @@ int main(int argc, char **argv)
 	{
 		line_number++;
 		line[strlen(line) - 1] = '\0'; /* remove \n from the end of line */
-		args = get_tokens(line); /* makes tokens and args array with mallocs */
-		if (white_spaces(args, line_number) == 0)
+
+		opcode = strtok(line, " ");
+		if(opcode != NULL)
 		{
-			clean_up(line, stack, file);
-			exit(EXIT_FAILURE);
-		}
-		for (i = 0; instructions[i].f != NULL; i++) /*Still have functions to call*/
-		{
-			if (strcmp(instructions[i].opcode, args[0]) == 0) /* Matched a case */
+			for (i = 0; instructions[i].f != NULL; i++) /*Still have functions to call*/
 			{
-				instructions[i].f(stack, line_number, args, line, file);
-				break;
+				if (strcmp(instructions[i].opcode, opcode) == 0) /* Matched a case */
+				{
+					instructions[i].f(stack, line_number);
+					break;
+				}
+			}
+			if (instructions[i].f == NULL)
+			{
+				fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
+				clean_up(line, stack, file);
+				exit(EXIT_FAILURE);
 			}
 		}
-		if (instructions[i].f == NULL)
-		{
-			fprintf(stderr, "L%u: unknown instruction %s\n", line_number, args[0]);
-			free_array(args);
-			clean_up(line, stack, file);
-			exit(EXIT_FAILURE);
-		}
-		free_array(args);
 	}
 	clean_up(line, stack, file);
 	return (0);
