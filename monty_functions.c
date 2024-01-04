@@ -38,36 +38,31 @@ void pop(stack_t **stack, unsigned int line_number, char **args, char *line, FIL
  * @file: monty.m file
  */
 
-void push(stack_t **stack, unsigned int line_number, char **args, char *line, FILE *file)
+void push(stack_t **stack, unsigned int line_number, char *line, FILE *file)
 {
 	int copy_n, i;
+	char *op_code = NULL;
 	stack_t *new_node;
 
-	if (args[1] == NULL)
+	op_code = strtok(NULL, " ");
+	if (op_code == NULL)
+		op_code = "null";
+	for (i = 0; op_code[i]; i++)
 	{
-		fprintf(stderr, "L%u: usage: push integer\n", line_number);
-		clean_up(line, stack, file);
-		free_array(args);
-		exit(EXIT_FAILURE);
-	}
-	for (i = 0; args[1][i]; i++)
-	{
-		if (!isdigit(args[1][i]) && (args[1][i] != '-' && args[1][i] != '+'))
+		if (!isdigit(op_code[i]) && (op_code[i] != '-' && op_code[i] != '+'))
 		{
 			fprintf(stderr, "L%u: usage: push integer\n", line_number);
 			clean_up(line, stack, file);
-			free_array(args);
 			exit(EXIT_FAILURE);
 		}
 	}
 
-	copy_n = atoi(args[1]);
+	copy_n = atoi(op_code);
 	new_node = malloc(sizeof(stack_t));
 	if (new_node == NULL)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
 		clean_up(line, stack, file);
-		free_array(args);
 		exit(EXIT_FAILURE);
 	}
 	new_node->n = copy_n;
@@ -88,12 +83,11 @@ void push(stack_t **stack, unsigned int line_number, char **args, char *line, FI
  * @file: monty.m file
  */
 
-void pall(stack_t **stack, unsigned int line_number, char **args, char *line, FILE *file)
+void pall(stack_t **stack, unsigned int line_number, char *line, FILE *file)
 {
 	(void)line_number;
-	(void)args;
-	(void)line;
 	(void)file;
+	(void)line;
 
 	stack_t *temp = NULL;
 	int n = 0;
