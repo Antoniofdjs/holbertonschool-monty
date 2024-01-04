@@ -49,6 +49,7 @@ int main(int argc, char **argv)
 	if (file == NULL)
 	{
 		fprintf(stderr, "Error: Can't open file <%s>\n", argv[1]);
+		free(stack);
 		exit(EXIT_FAILURE);
 	}
 	while ((getline(&line, &len, file) != EOF)) /* Line by line copy into line */
@@ -71,7 +72,7 @@ int main(int argc, char **argv)
 		}
 		if (instructions[i].f == NULL)
 		{
-			fprintf(stderr, "L%d: unknown instruction %s\n", line_number, args[0]);
+			fprintf(stderr, "L%u: unknown instruction %s\n", line_number, args[0]);
 			free_array(args);
 			clean_up(line, stack, file);
 			exit(EXIT_FAILURE);

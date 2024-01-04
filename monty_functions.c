@@ -25,7 +25,7 @@ void push(stack_t **stack, unsigned int line_number, char **args, char *line, FI
 	}
 	for (i = 0; args[1][i]; i++)
 	{
-		if (!isdigit(args[1][i]))
+		if (!isdigit(args[1][i]) && (args[1][i] != '-' && args[1][i] != '+'))
 		{
 			fprintf(stderr, "L%u: usage: push integer\n", line_number);
 			clean_up(line, stack, file);
