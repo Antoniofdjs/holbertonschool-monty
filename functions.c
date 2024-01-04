@@ -6,7 +6,9 @@
  * clean_up - free and close items used * @line: line from getline file
  * @stack: head of stack_t
  * @file: monty.m file
+ * @line: line read from file monty.m
  */
+
 void clean_up(char *line, stack_t **stack, FILE *file)
 {
 	free(line);

@@ -49,7 +49,7 @@ int main(int argc, char **argv)
 		line_number++;
 		line[strlen(line) - 1] = '\0'; /* remove \n from the end of line */
 		opcode = strtok(line, " ");
-		if(opcode != NULL)
+		if (opcode != NULL)
 		{
 			for (i = 0; instructions[i].f != NULL; i++) /*Still have functions to call*/
 			{

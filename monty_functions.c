@@ -30,7 +30,6 @@ void pop(stack_t **stack, unsigned int line_number, char *line, FILE *file)
  *
  * @stack: head of stack_t list
  * @line_number: number of line from file
- * @args: arguments of get_tokens
  * @line: line from fgets from file
  * @file: monty.m file
  */
@@ -75,7 +74,6 @@ void push(stack_t **stack, unsigned int line_number, char *line, FILE *file)
  *
  * @stack: head of stack_t list
  * @line_number: number of line from file
- * @args: arguments of get_tokens
  * @line: line from fgets from file
  * @file: monty.m file
  */
