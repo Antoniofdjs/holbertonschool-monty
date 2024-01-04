@@ -30,13 +30,12 @@ struct stack_s *next;
 typedef struct instruction_s
 {
 char *opcode;
-void (*f)(stack_t **stack, unsigned int line_number);
+void (*f)(stack_t **stack, unsigned int line_number, char *line, FILE *file);
 } instruction_t;
-
 void clean_up(char *line, stack_t **stack, FILE *file);
 char **get_tokens(char *str_line);
 void free_array(char **args);
-void push(stack_t **stack, unsigned int line_number);
-void pall(stack_t **stack, unsigned int line_number);
+void push(stack_t **stack, unsigned int line_number, char *line, FILE *file);
+void pall(stack_t **stack, unsigned int line_number, char *line, FILE *file);
 void free_dlist(stack_t **head);
 #endif /* MONTY_H */

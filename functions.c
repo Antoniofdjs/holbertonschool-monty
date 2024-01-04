@@ -9,10 +9,12 @@
  */
 void clean_up(char *line, stack_t **stack, FILE *file)
 {
-	free(line); if (*stack != NULL)
+	free(line);
+	if (*stack != NULL)
 		free_dlist(stack);
 	free(stack);
-	fclose(file); }
+	fclose(file);
+}
 
 /**
  * get_tokens - tokenizes str_line, stores it in array * @str_line: string from main, from stdin

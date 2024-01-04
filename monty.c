@@ -2,40 +2,32 @@
 #include "monty.h"
 
 /**
- * white_spaces - checks if args is null, has only white spaces
- * @args: array from get_tokens, from main
- * @line_number: string from main, from stdin
- * Return: 0 if args was null(white spaces only)
+ * arg_validation - validate user input argv
  */
-int white_spaces(char **args, unsigned int line_number)
-{
-	if (args[0] == NULL) /* white spaces only */
-	{ fprintf(stderr, "L%d: unknown instruction %s\n", line_number, args[0]);
-		free(args);
-		return (0);
-	}
-	return (-1);
-}
+
 /**
  * arg_validation - validate user input argv
  */
+
 void arg_validation(void)
 {
-	fprintf(stderr, "USAGE: monty file\n");
-	exit(EXIT_FAILURE); }
+	printf("USAGE: monty file\n");
+	exit(EXIT_FAILURE);
+}
 
-	/**
-	 * main - monty translator * @argc: argument count
-	 * @argv: argument content
-	 * Return: 0
-	 */
+/**
+ * main - monty translator * @argc: argument count
+ * @argv: argument content
+ * Return: 0
+ */
+
 int main(int argc, char **argv)
 {
 	unsigned int line_number = 0;
 	char *line = NULL;
 	size_t len = 0, i;
-	FILE *file;
 	char *opcode;
+	FILE *file;
 
 	stack_t **stack;
 	instruction_t instructions[] = {
@@ -58,7 +50,6 @@ int main(int argc, char **argv)
 	{
 		line_number++;
 		line[strlen(line) - 1] = '\0'; /* remove \n from the end of line */
-
 		opcode = strtok(line, " ");
 		if(opcode != NULL)
 		{
@@ -66,7 +57,7 @@ int main(int argc, char **argv)
 			{
 				if (strcmp(instructions[i].opcode, opcode) == 0) /* Matched a case */
 				{
-					instructions[i].f(stack, line_number);
+					instructions[i].f(stack, line_number, line, file);
 					break;
 				}
 			}

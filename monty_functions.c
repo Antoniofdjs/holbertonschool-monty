@@ -11,7 +11,7 @@
  * @file: monty.m file
  */
 
-void push(stack_t **stack, unsigned int line_number)
+void push(stack_t **stack, unsigned int line_number, char *line, FILE *file)
 {
 	int copy_n, i;
 	char *op_code = NULL;
@@ -25,6 +25,7 @@ void push(stack_t **stack, unsigned int line_number)
 		if (!isdigit(op_code[i]) && (op_code[i] != '-' && op_code[i] != '+'))
 		{
 			fprintf(stderr, "L%u: usage: push integer\n", line_number);
+			clean_up(line, stack, file);
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -34,6 +35,7 @@ void push(stack_t **stack, unsigned int line_number)
 	if (new_node == NULL)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
+		clean_up(line, stack, file);
 		exit(EXIT_FAILURE);
 	}
 	new_node->n = copy_n;
@@ -54,9 +56,12 @@ void push(stack_t **stack, unsigned int line_number)
  * @file: monty.m file
  */
 
-void pall(stack_t **stack, unsigned int line_number)
+void pall(stack_t **stack, unsigned int line_number, char *line, FILE *file)
 {
 	(void)line_number;
+	(void)file;
+	(void)line;
+
 	stack_t *temp = NULL;
 	int n = 0;
 
