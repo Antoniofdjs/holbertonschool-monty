@@ -5,10 +5,6 @@
  * arg_validation - validate user input argv
  */
 
-/**
- * arg_validation - validate user input argv
- */
-
 void arg_validation(void)
 {
 	printf("USAGE: monty file\n");
@@ -17,6 +13,7 @@ void arg_validation(void)
 
 /**
  * main - monty translator * @argc: argument count
+ * @argc:  argument count from promt
  * @argv: argument content
  * Return: 0
  */
