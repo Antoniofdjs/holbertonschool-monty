@@ -34,6 +34,7 @@ char *opcode;
 void (*f)(stack_t **stack, unsigned int line_number, char *line, FILE *file);
 } instruction_t;
 void clean_up(char *line, stack_t **stack, FILE *file);
+void ops_exe(stack_t **stack, char *line, unsigned int line_number, FILE *file);
 void push(stack_t **stack, unsigned int line_number, char *line, FILE *file);
 void pall(stack_t **stack, unsigned int line_number, char *line, FILE *file);
 void pop(stack_t **stack, unsigned int line_number, char *line, FILE *file);
