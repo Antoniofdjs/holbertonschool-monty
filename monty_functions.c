@@ -3,7 +3,7 @@
 
 #include "monty.h"
 /**
- *pop - function that removes the top element of the stack
+ *pop - Function Removes the top element of the stack
  *@stack: head of list
  *@line_number: line number of the file
  *@line: string from lines
