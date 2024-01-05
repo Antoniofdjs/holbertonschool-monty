@@ -38,6 +38,8 @@ void push(stack_t **stack, unsigned int line_number, char *line, FILE *file);
 void pall(stack_t **stack, unsigned int line_number, char *line, FILE *file);
 void pop(stack_t **stack, unsigned int line_number, char *line, FILE *file);
 void add(stack_t **stack, unsigned int line_number, char *line, FILE *file);
+void sub(stack_t **stack, unsigned int line_number, char *line, FILE *file);
+void _div(stack_t **stack, unsigned int line_number, char *line, FILE *file);
 void free_dlist(stack_t **head);
 
 #endif /* MONTY_H */

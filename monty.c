@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "monty.h"
 
 /**
@@ -60,7 +59,7 @@ int main(int argc, char **argv)
 
 	stack_t **stack;
 	instruction_t instructions[] = {{"push", push}, {"pall", pall}, {"pop", pop},
-		{"add", add}, {NULL, NULL}
+		{"add", add}, {"sub", sub}, {"_div", _div}, {NULL, NULL}
 	};
 	arg_validation(argc, argv);
 	file = fopen(argv[1], "r");/* read monty.m file */
