@@ -42,6 +42,7 @@ void arg_validation(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	}
 }
+
 /**
  * main - monty translator
  * @argc: argument count
@@ -53,37 +54,25 @@ void arg_validation(int argc, char **argv)
 int main(int argc, char **argv)
 {
 	unsigned int line_number = 0;
-	char *line = NULL, *opcode = NULL;
-	size_t len = 0, i;
+	char *line = NULL;
+	size_t len = 0;
 	FILE *file;
-
 	stack_t **stack;
-	instruction_t instructions[] = {{"push", push}, {"pall", pall}, {"pop", pop},
-		{"add", add}, {"sub", sub}, {"_div", _div}, {NULL, NULL}
-	};
+
 	arg_validation(argc, argv);
 	file = fopen(argv[1], "r");/* read monty.m file */
 	file_validation(file, argv);
 	stack = malloc(sizeof(stack_t *));
+	if (stack == NULL)
+	{
+		fprintf(stderr, "Error: malloc failed\n");
+		exit(EXIT_FAILURE);
+	}
 	*stack = NULL;
 	while ((getline(&line, &len, file) != EOF)) /* Line by line copy into line */
 	{
 		line_remove_count(&line_number, line);
-		opcode = strtok(line, " ");
-		for (i = 0; instructions[i].f != NULL && opcode != NULL; i++)/*calls*/
-		{
-			if (strcmp(instructions[i].opcode, opcode) == 0) /* Matched a case */
-			{
-				instructions[i].f(stack, line_number, line, file);
-				break;
-			}
-		}
-		if (instructions[i].f == NULL)
-		{
-			fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
-			clean_up(line, stack, file);
-			exit(EXIT_FAILURE);
-		}
+		ops_exe(stack, line, line_number, file);
 	}
 	clean_up(line, stack, file);
 	return (0);
