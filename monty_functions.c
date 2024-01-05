@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include "monty.h"
 
-#include "monty.h"
 /**
  *pop - function that removes the top element of the stack
  *@stack: head of list
@@ -98,4 +97,38 @@ void pall(stack_t **stack, unsigned int line_number, char *line, FILE *file)
 		printf("%d\n", n);
 		temp = temp->next;
 	}
+}
+
+/**
+ * add - Add n from node 1 and 2 and save at node 2, pop 1 after
+ *
+ * @stack: head of stack_t list
+ * @line_number: number of line from file
+ * @line: line from fgets from file
+ * @file: monty.m file
+ */
+
+void add(stack_t **stack, unsigned int line_number, char *line, FILE *file)
+{
+	int total_nodes = 0, temp_n = 0;
+	stack_t *temp = NULL;
+
+	temp = *stack;
+	while (temp != NULL && *stack != NULL)
+	{
+		total_nodes++;
+		temp = temp->next;
+	}
+	if (total_nodes < 2 || stack == NULL) /* less than 2 nodes, cant add them */
+	{
+		fprintf(stderr, "L%u: can't add, stack too short\n", line_number);
+		clean_up(line, stack, file);
+		exit(EXIT_FAILURE);
+	}
+
+	temp = *stack;
+	temp_n = temp->n; /* value of first node stored in temp_n */
+	temp = temp->next; /* next node */
+	temp->n = ((temp->n) + (temp_n)); /* sum is done at node temp2 */
+	pop(stack, line_number, line, file); /* remove the first node */
 }
