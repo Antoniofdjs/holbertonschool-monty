@@ -36,6 +36,8 @@ void (*f)(stack_t **stack, unsigned int line_number, char *line, FILE *file);
 void clean_up(char *line, stack_t **stack, FILE *file);
 void push(stack_t **stack, unsigned int line_number, char *line, FILE *file);
 void pall(stack_t **stack, unsigned int line_number, char *line, FILE *file);
-void free_dlist(stack_t **head);
 void pop(stack_t **stack, unsigned int line_number, char *line, FILE *file);
+void add(stack_t **stack, unsigned int line_number, char *line, FILE *file);
+void free_dlist(stack_t **head);
+
 #endif /* MONTY_H */
