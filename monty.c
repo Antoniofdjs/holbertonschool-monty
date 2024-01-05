@@ -74,9 +74,7 @@ int main(int argc, char **argv)
 	{
 		line_remove_count(&line_number, line);
 		opcode = strtok(line, " ");
-		if (opcode != NULL)
-		{
-			for (i = 0; instructions[i].f != NULL; i++) /*Still have functions to call*/
+			for (i = 0; instructions[i].f != NULL && opcode != NULL; i++)/*calls*/
 			{
 				if (strcmp(instructions[i].opcode, opcode) == 0) /* Matched a case */
 				{
@@ -90,7 +88,6 @@ int main(int argc, char **argv)
 				clean_up(line, stack, file);
 				exit(EXIT_FAILURE);
 			}
-		}
 	}
 	clean_up(line, stack, file);
 	return (0);
