@@ -2,17 +2,50 @@
 #include "monty.h"
 
 /**
- * arg_validation - validate user input argv
+ * line_remove_count - removes \n at end of line and count line
+ * @line_number: number of the line of file * @line: line read from file
+ * @line: line from file
  */
 
-void arg_validation(void)
+void line_remove_count(unsigned int *line_number, char *line)
 {
-	printf("USAGE: monty file\n");
-	exit(EXIT_FAILURE);
+	(*line_number)++;
+	line[strlen(line) - 1] = '\0';
+}
+
+
+/**
+ * file_validation- check if file was opened, also free stack
+ * @file: fopen of montyfile.m
+ * @argv: arguments from prompt
+ */
+
+void file_validation(FILE *file, char **argv)
+{
+		if (file == NULL)
+	{
+		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
+		exit(EXIT_FAILURE);
+	}
 }
 
 /**
- * main - monty translator * @argc: argument count
+ * arg_validation - validate user input argv
+ * @argc: argument count from prompt * @argv: argument values from prompt
+ * @argv: argument values from promt
+ */
+
+void arg_validation(int argc, char **argv)
+{
+	if (argc != 2 || argv[1] == NULL)
+	{
+		printf("USAGE: monty file\n");
+		exit(EXIT_FAILURE);
+	}
+}
+/**
+ * main - monty translator
+ * @argc: argument count
  * @argc:  argument count from promt
  * @argv: argument content
  * Return: 0
@@ -21,9 +54,8 @@ void arg_validation(void)
 int main(int argc, char **argv)
 {
 	unsigned int line_number = 0;
-	char *line = NULL;
+	char *line = NULL, *opcode = NULL;
 	size_t len = 0, i;
-	char *opcode;
 	FILE *file;
 
 	stack_t **stack;
@@ -33,21 +65,14 @@ int main(int argc, char **argv)
 		{"pop", pop},
 		{NULL, NULL}
 	};
-	if (argc != 2 || argv[1] == NULL)
-		arg_validation();
+	arg_validation(argc, argv);
+	file = fopen(argv[1], "r");/* read monty.m file */
+	file_validation(file, argv);
 	stack = malloc(sizeof(stack_t *));
 	*stack = NULL;
-	file = fopen(argv[1], "r");/* read monty.m file */
-	if (file == NULL)
-	{
-		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
-		free(stack);
-		exit(EXIT_FAILURE);
-	}
 	while ((getline(&line, &len, file) != EOF)) /* Line by line copy into line */
 	{
-		line_number++;
-		line[strlen(line) - 1] = '\0'; /* remove \n from the end of line */
+		line_remove_count(&line_number, line);
 		opcode = strtok(line, " ");
 		if (opcode != NULL)
 		{
