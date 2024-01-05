@@ -36,3 +36,38 @@ void free_dlist(stack_t **head)
 		free(temp);
 	}
 }
+
+/**
+ * ops_exe - Takes line from file to execute commands read
+ * @stack: head of list from stack_t
+ * @line_number: line number of the file
+ * @line: string from lines
+ * @file: file set as upstream of getline
+ */
+
+void ops_exe(stack_t **stack, char *line, unsigned int line_number, FILE *file)
+{
+
+	char *opcode = NULL;
+	int i;
+
+	instruction_t instructions[] = {{"push", push}, {"pall", pall}, {"pop", pop},
+		{"add", add}, {"sub", sub}, {"_div", _div}, {NULL, NULL}
+	};
+
+	opcode = strtok(line, " ");
+	for (i = 0; instructions[i].f != NULL && opcode != NULL; i++)/*calls*/
+	{
+		if (strcmp(instructions[i].opcode, opcode) == 0) /* Matched a case */
+		{
+			instructions[i].f(stack, line_number, line, file);
+			break;
+		}
+	}
+	if (instructions[i].f == NULL)
+	{
+		fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
+		clean_up(line, stack, file);
+		exit(EXIT_FAILURE);
+	}
+}
