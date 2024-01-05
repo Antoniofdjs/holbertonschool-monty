@@ -22,7 +22,7 @@ void line_remove_count(unsigned int *line_number, char *line)
 
 void file_validation(FILE *file, char **argv)
 {
-		if (file == NULL)
+	if (file == NULL)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
@@ -60,7 +60,7 @@ int main(int argc, char **argv)
 
 	stack_t **stack;
 	instruction_t instructions[] = {{"push", push}, {"pall", pall}, {"pop", pop},
-		{NULL, NULL}
+		{"add", add}, {NULL, NULL}
 	};
 	arg_validation(argc, argv);
 	file = fopen(argv[1], "r");/* read monty.m file */
@@ -71,20 +71,20 @@ int main(int argc, char **argv)
 	{
 		line_remove_count(&line_number, line);
 		opcode = strtok(line, " ");
-			for (i = 0; instructions[i].f != NULL && opcode != NULL; i++)/*calls*/
+		for (i = 0; instructions[i].f != NULL && opcode != NULL; i++)/*calls*/
+		{
+			if (strcmp(instructions[i].opcode, opcode) == 0) /* Matched a case */
 			{
-				if (strcmp(instructions[i].opcode, opcode) == 0) /* Matched a case */
-				{
-					instructions[i].f(stack, line_number, line, file);
-					break;
-				}
+				instructions[i].f(stack, line_number, line, file);
+				break;
 			}
-			if (instructions[i].f == NULL)
-			{
-				fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
-				clean_up(line, stack, file);
-				exit(EXIT_FAILURE);
-			}
+		}
+		if (instructions[i].f == NULL)
+		{
+			fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
+			clean_up(line, stack, file);
+			exit(EXIT_FAILURE);
+		}
 	}
 	clean_up(line, stack, file);
 	return (0);
