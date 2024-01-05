@@ -1,7 +1,31 @@
 #include <stdio.h>
 #include "monty.h"
+/**
+ *swap - function that swaps the top elements of the stack
+ *
+ *@stack: list
+ *@line_number: line number of the file
+ *@args: arguments
+ *@line: strig from the getline
+ *@file: file set as upstream of getline
+ */
+void swap(stack_t **stack, unsigned int line_number, char *line, FILE *file)
+{
+        stack_t *temp;
 
-#include "monty.h"
+        if (*stack == NULL || (*stack)->next == NULL)
+        {
+                fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
+                clean_up(line, stack, file);
+                exit(EXIT_FAILURE);
+        }
+        temp = (*stack)->next;
+        (*stack)->prev = temp;
+        (*stack)->next = temp->next;
+        temp->prev = NULL;
+        temp->next = *stack;
+        *stack = temp;
+}
 /**
  *pop - function that removes the top element of the stack
  *@stack: head of list
@@ -9,14 +33,13 @@
  *@line: string from lines
  *@file: file set as upstream of getline
  */
-void pop(stack_t **stack, unsigned int line_number, char **args, char *line, FILE *file)
+void pop(stack_t **stack, unsigned int line_number, char *line, FILE *file)
 {
         stack_t *temp = NULL;
 
         if (*stack == NULL || stack == NULL)
         {
-                printf("L%d: can't pop an empty stack", line_number);
-		free_array(args);
+                fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
                 clean_up(line, stack, file);
                 exit(EXIT_FAILURE);
         }
@@ -38,36 +61,31 @@ void pop(stack_t **stack, unsigned int line_number, char **args, char *line, FIL
  * @file: monty.m file
  */
 
-void push(stack_t **stack, unsigned int line_number, char **args, char *line, FILE *file)
+void push(stack_t **stack, unsigned int line_number, char *line, FILE *file)
 {
 	int copy_n, i;
+	char *op_code = NULL;
 	stack_t *new_node;
 
-	if (args[1] == NULL)
+	op_code = strtok(NULL, " ");
+	if (op_code == NULL)
+		op_code = "null";
+	for (i = 0; op_code[i]; i++)
 	{
-		fprintf(stderr, "L%u: usage: push integer\n", line_number);
-		clean_up(line, stack, file);
-		free_array(args);
-		exit(EXIT_FAILURE);
-	}
-	for (i = 0; args[1][i]; i++)
-	{
-		if (!isdigit(args[1][i]) && (args[1][i] != '-' && args[1][i] != '+'))
+		if (!isdigit(op_code[i]) && (op_code[i] != '-' && op_code[i] != '+'))
 		{
 			fprintf(stderr, "L%u: usage: push integer\n", line_number);
 			clean_up(line, stack, file);
-			free_array(args);
 			exit(EXIT_FAILURE);
 		}
 	}
 
-	copy_n = atoi(args[1]);
+	copy_n = atoi(op_code);
 	new_node = malloc(sizeof(stack_t));
 	if (new_node == NULL)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
 		clean_up(line, stack, file);
-		free_array(args);
 		exit(EXIT_FAILURE);
 	}
 	new_node->n = copy_n;
@@ -88,12 +106,11 @@ void push(stack_t **stack, unsigned int line_number, char **args, char *line, FI
  * @file: monty.m file
  */
 
-void pall(stack_t **stack, unsigned int line_number, char **args, char *line, FILE *file)
+void pall(stack_t **stack, unsigned int line_number, char *line, FILE *file)
 {
 	(void)line_number;
-	(void)args;
-	(void)line;
 	(void)file;
+	(void)line;
 
 	stack_t *temp = NULL;
 	int n = 0;
@@ -109,4 +126,37 @@ void pall(stack_t **stack, unsigned int line_number, char **args, char *line, FI
 		printf("%d\n", n);
 		temp = temp->next;
 	}
+}
+
+/**
+ *pint - function that print the value at the top of stack
+ *@stack: double pointer to head of the stack
+ *@line_number: the number of the line in file
+ */
+void pint(stack_t **stack, unsigned int line_number, char *line, FILE *file)
+{
+	(void)line;
+	(void)file;
+
+        if (*stack == NULL || stack == NULL)
+        {
+                fprintf(stderr, "L%u: can't pint, stack empty\n", line_number);
+                exit(EXIT_FAILURE);
+        }
+        printf("%d\n", (*stack)->n);
+}
+
+/**
+ *nop - doesn't do anything
+ *@stack: list
+ *@line_number: line number in the file
+ *@line: string
+ *@file: file set as upstream of getline
+ */
+void nop(stack_t **stack, unsigned int line_number, char *line, FILE *file)
+{
+        (void)*stack;
+        (void)line_number;
+	(void)line;
+	(void)file;
 }
