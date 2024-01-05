@@ -59,10 +59,7 @@ int main(int argc, char **argv)
 	FILE *file;
 
 	stack_t **stack;
-	instruction_t instructions[] = {
-		{"push", push},
-		{"pall", pall},
-		{"pop", pop},
+	instruction_t instructions[] = {{"push", push}, {"pall", pall}, {"pop", pop},
 		{NULL, NULL}
 	};
 	arg_validation(argc, argv);
