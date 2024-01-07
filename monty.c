@@ -21,7 +21,7 @@ void file_validation(FILE *file, char **argv)
 {
 	if (file == NULL)
 	{
-		fprintf(stderr, "Error: can't open file %s\n", argv[1]);
+		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -35,8 +35,8 @@ void arg_validation(int argc, char **argv)
 {
 	if (argc != 2 || argv[1] == NULL)
 	{
-	printf("USAGE: monty file\n");
-	exit(EXIT_FAILURE);
+		printf("USAGE: monty file\n");
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -60,6 +60,11 @@ int main(int argc, char **argv)
 	file = fopen(argv[1], "r");/* read monty.m file */
 	file_validation(file, argv);
 	stack = malloc(sizeof(stack_t *));
+	if (stack == NULL)
+	{
+		fprintf(stderr, "Error: malloc failed\n");
+		exit(EXIT_FAILURE);
+	}
 	*stack = NULL;
 	while ((getline(&line, &len, file) != EOF)) /* Line by line copy into line */
 	{
