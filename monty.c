@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "monty.h"
 
 /**
@@ -5,35 +6,31 @@
  * @line_number: number of the line of file * @line: line read from file
  * @line: line from file
  */
-
 void line_remove_count(unsigned int *line_number, char *line)
 {
 	(*line_number)++;
 	line[strlen(line) - 1] = '\0';
 }
 
-
 /**
  * file_validation- check if file was opened, also free stack
  * @file: fopen of montyfile.m
  * @argv: arguments from prompt
  */
-
 void file_validation(FILE *file, char **argv)
 {
 	if (file == NULL)
 	{
-		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
+		fprintf(stderr, "Error: can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
 }
 
 /**
- * arg_validation - validate user input argv
- * @argc: argument count from prompt * @argv: argument values from prompt
- * @argv: argument values from promt
+ *arg_validation - validate user input argv
+ *@argc: argument count from command prompt
+ *@argv: argument value from command prompt
  */
-
 void arg_validation(int argc, char **argv)
 {
 	if (argc != 2 || argv[1] == NULL)
