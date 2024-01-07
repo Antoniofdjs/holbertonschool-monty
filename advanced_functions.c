@@ -35,7 +35,6 @@ void sub(stack_t **stack, unsigned int line_number, char *line, FILE *file)
 }
 
 /**
-
  * _div - devide n2/n1 save at n2, pop after
  * @stack: head of stack_t list
  * @line_number: number of line from file
