@@ -6,57 +6,15 @@
  * clean_up - free and close items used * @line: line from getline file
  * @stack: head of stack_t
  * @file: monty.m file
+ * @line: read line from file
  */
 void clean_up(char *line, stack_t **stack, FILE *file)
 {
-	free(line); if (*stack != NULL)
+	free(line);
+	if (*stack != NULL)
 		free_dlist(stack);
 	free(stack);
-	fclose(file); }
-
-/**
- * get_tokens - tokenizes str_line, stores it in array * @str_line: string from main, from stdin
- * Return: pointer of array
- */
-char **get_tokens(char *str_line)
-{
-	char **array;
-	int tok_count = 0; char *token, *str_line_dup;
-
-	str_line_dup = strdup(str_line);/* we need dup to count tokens */
-	token = strtok(str_line_dup, " ");
-	while (token != NULL)
-	{
-		tok_count++; token = strtok(NULL, " "); /* next token */
-	}
-
-	free(str_line_dup); array = malloc((tok_count + 1) * sizeof(char *));/* making size for indexes */
-
-	if (array == NULL)
-		return (NULL);
-	token = strtok(str_line, " "); /* original str to tokenize */
-	tok_count = 0;
-while (token != NULL)
-	{
-		array[tok_count] = strdup(token); /* dup tokens into args,does malloc also*/
-		tok_count++; token = strtok(NULL, " "); /* next token */
-	}
-	array[tok_count] = NULL;/* last index of args */
-	return (array); /* sending array, args in main receives it */
-}
-
-/**
- * free_array - free **array
- * @args: array char **
- */
-
-void free_array(char **args)
-{
-	int i = 0;
-
-	for (i = 0; args[i] != NULL; i++) /* free the array & indxs */
-		free(args[i]);
-	free(args);
+	fclose(file);
 }
 
 /**
@@ -75,5 +33,41 @@ void free_dlist(stack_t **head)
 		temp = *head;
 		*head = (*head)->next;
 		free(temp);
+	}
+}
+
+/**
+ * ops_exe - Takes line from file to execute commands read
+ * @stack: head of list from stack_t
+ * @line_number: line number of the file
+ * @line: string from lines
+ * @file: file set as upstream of getline
+ */
+
+void ops_exe(stack_t **stack, char *line, unsigned int line_number, FILE *file)
+{
+
+	char *opcode = NULL;
+	int i;
+
+	instruction_t instructions[] = {{"push", push}, {"pall", pall}, {"pop", pop},
+		{"add", add}, {"sub", sub}, {"_div", _div}, {"nop", nop}, {"pint", pint},
+		{"swap", swap}, {NULL, NULL}
+	};
+
+	opcode = strtok(line, " ");
+	for (i = 0; instructions[i].f != NULL && opcode != NULL; i++)/*calls*/
+	{
+		if (strcmp(instructions[i].opcode, opcode) == 0) /* Matched a case */
+		{
+			instructions[i].f(stack, line_number, line, file);
+			break;
+		}
+	}
+	if (instructions[i].f == NULL)
+	{
+		fprintf(stderr, "L%u: unknown instruction %s\n", line_number, opcode);
+		clean_up(line, stack, file);
+		exit(EXIT_FAILURE);
 	}
 }
