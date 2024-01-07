@@ -52,7 +52,7 @@ void ops_exe(stack_t **stack, char *line, unsigned int line_number, FILE *file)
 	int i;
 
 	instruction_t instructions[] = {{"push", push}, {"pall", pall}, {"pop", pop},
-		{"add", add}, {"sub", sub}, {"_div", _div}, {"nop", nop}, {"pint", pint},
+		{"add", add}, {"sub", sub}, {"div", div}, {"nop", nop}, {"pint", pint},
 		{"swap", swap}, {NULL, NULL}
 	};
 
