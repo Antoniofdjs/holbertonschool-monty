@@ -70,7 +70,7 @@ void push(stack_t **stack, unsigned int line_number, char *line, FILE *file)
 		op_code = "null";
 	for (i = 0; op_code[i]; i++)
 	{
-		if (op_code[i] == '-' || op_code[i] == '+')
+		if (op_code[0] == '-' || op_code[0] == '+')
 			i++;
 		if (!isdigit(op_code[i]))
 		{
