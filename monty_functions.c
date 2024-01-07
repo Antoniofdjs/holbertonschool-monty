@@ -70,8 +70,6 @@ void push(stack_t **stack, unsigned int line_number, char *line, FILE *file)
 		op_code = "null";
 	for (i = 0; op_code[i]; i++)
 	{
-		if (op_code[i] == '-')
-			i++;
 		if (!isdigit(op_code[i]))
 		{
 			fprintf(stderr, "L%u: usage: push integer\n", line_number);
