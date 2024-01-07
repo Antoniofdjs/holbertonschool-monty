@@ -60,11 +60,6 @@ int main(int argc, char **argv)
 	file = fopen(argv[1], "r");/* read monty.m file */
 	file_validation(file, argv);
 	stack = malloc(sizeof(stack_t *));
-	if (stack == NULL)
-	{
-		fprintf(stderr, "Error: malloc failed\n");
-		exit(EXIT_FAILURE);
-	}
 	*stack = NULL;
 	while ((getline(&line, &len, file) != EOF)) /* Line by line copy into line */
 	{
