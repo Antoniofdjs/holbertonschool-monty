@@ -73,3 +73,48 @@ void _div(stack_t **stack, unsigned int line_number, char *line, FILE *file)
 	temp->n = ((temp->n) / (temp_n)); /*sub is done at node temp2 n2 -n1 */
 	pop(stack, line_number, line, file); /* remove the first node */
 }
+
+/**
+ *pint - function that print the value at the top of stack
+ *@stack: double pointer to head of the stack
+ *@line_number: the number of the line in file
+ *@line: line read from file
+ *@file: file that contains read from monty.m file
+ */
+void pint(stack_t **stack, unsigned int line_number, char *line, FILE *file)
+{
+	(void)line;
+	(void)file;
+
+	if (*stack == NULL || stack == NULL)
+	{
+		fprintf(stderr, "L%u: can't pint, stack empty\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+	printf("%d\n", (*stack)->n);
+}
+
+/**
+ *nop - doesn't do anything
+ *@stack: list
+ *@line_number: line number in the file
+ *@line: string
+ *@file: file set as upstream of getline
+ */
+void nop(stack_t **stack, unsigned int line_number, char *line, FILE *file)
+{
+	(void) stack;
+	(void) line_number;
+	(void) line;
+	(void) file;
+}
+
+/**
+ * add - Add n from node 1 and 2 and save at node 2, pop 1 after
+ *
+ * @stack: head of stack_t list
+ * @line_number: number of line from file
+ * @line: line from fgets from file
+ * @file: monty.m file
+ */
+
