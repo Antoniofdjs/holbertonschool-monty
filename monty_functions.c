@@ -1,6 +1,30 @@
 #include <stdio.h>
 #include "monty.h"
+/**
+ *swap - function that swaps the top elements of the stack
+ *
+ *@stack: list
+ *@line_number: line number of the file
+ *@line: strig from the getline
+ *@file: file set as upstream of getline
+ */
+void swap(stack_t **stack, unsigned int line_number, char *line, FILE *file)
+{
+	stack_t *temp;
 
+	if (*stack == NULL || (*stack)->next == NULL)
+	{
+		fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
+		clean_up(line, stack, file);
+		exit(EXIT_FAILURE);
+	}
+	temp = (*stack)->next;
+	(*stack)->prev = temp;
+	(*stack)->next = temp->next;
+	temp->prev = NULL;
+	temp->next = *stack;
+	*stack = temp;
+}
 /**
  *pop - function that removes the top element of the stack
  *@stack: head of list
@@ -14,14 +38,16 @@ void pop(stack_t **stack, unsigned int line_number, char *line, FILE *file)
 
 	if (*stack == NULL || stack == NULL)
 	{
-		fprintf(stderr, "L%u: can't pop an empty stack\n", line_number);
+		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
 		clean_up(line, stack, file);
 		exit(EXIT_FAILURE);
 	}
-
-	temp = *stack;
-	*stack = (*stack)->next;
-	free(temp);
+	if (stack != NULL)
+	{
+		temp = *stack;
+		*stack = (*stack)->next;
+		free(temp);
+	}
 }
 
 /**
