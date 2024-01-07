@@ -43,7 +43,7 @@ void sub(stack_t **stack, unsigned int line_number, char *line, FILE *file)
  * @file: monty.m file
  */
 
-void div(stack_t **stack, unsigned int line_number, char *line, FILE *file)
+void _div(stack_t **stack, unsigned int line_number, char *line, FILE *file)
 {
 	int total_nodes = 0, temp_n = 0;
 	stack_t *temp = NULL;
