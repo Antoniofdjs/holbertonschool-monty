@@ -5,26 +5,25 @@
  *
  *@stack: list
  *@line_number: line number of the file
- *@args: arguments
  *@line: strig from the getline
  *@file: file set as upstream of getline
  */
 void swap(stack_t **stack, unsigned int line_number, char *line, FILE *file)
 {
-        stack_t *temp;
+	stack_t *temp;
 
-        if (*stack == NULL || (*stack)->next == NULL)
-        {
-                fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
-                clean_up(line, stack, file);
-                exit(EXIT_FAILURE);
-        }
-        temp = (*stack)->next;
-        (*stack)->prev = temp;
-        (*stack)->next = temp->next;
-        temp->prev = NULL;
-        temp->next = *stack;
-        *stack = temp;
+	if (*stack == NULL || (*stack)->next == NULL)
+	{
+		fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
+		clean_up(line, stack, file);
+		exit(EXIT_FAILURE);
+	}
+	temp = (*stack)->next;
+	(*stack)->prev = temp;
+	(*stack)->next = temp->next;
+	temp->prev = NULL;
+	temp->next = *stack;
+	*stack = temp;
 }
 /**
  *pop - Function Removes the top element of the stack
@@ -37,18 +36,18 @@ void pop(stack_t **stack, unsigned int line_number, char *line, FILE *file)
 {
 	stack_t *temp = NULL;
 
-        if (*stack == NULL || stack == NULL)
-        {
-                fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
-                clean_up(line, stack, file);
-                exit(EXIT_FAILURE);
-        }
-        if (stack != NULL)
-        {
-                temp = *stack;
-                *stack = (*stack)->next;
-                free(temp);
-        }
+	if (*stack == NULL || stack == NULL)
+	{
+		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
+		clean_up(line, stack, file);
+		exit(EXIT_FAILURE);
+	}
+	if (stack != NULL)
+	{
+		temp = *stack;
+		*stack = (*stack)->next;
+		free(temp);
+	}
 }
 
 /**
@@ -161,7 +160,6 @@ void nop(stack_t **stack, unsigned int line_number, char *line, FILE *file)
 
 /**
  * add - Add n from node 1 and 2 and save at node 2, pop 1 after
- *
  * @stack: head of stack_t list
  * @line_number: number of line from file
  * @line: line from fgets from file
