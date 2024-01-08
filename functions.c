@@ -53,7 +53,7 @@ void ops_exe(stack_t **stack, char *line, unsigned int line_number, FILE *file)
 
 	instruction_t instructions[] = {{"push", push}, {"pall", pall}, {"pop", pop},
 		{"add", add}, {"sub", sub}, {"div", _div}, {"nop", nop}, {"pint", pint},
-		{"swap", swap}, {NULL, NULL}
+		{"swap", swap}, {"mul", mul}, {NULL, NULL}
 	};
 
 	opcode = strtok(line, " ");
