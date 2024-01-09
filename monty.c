@@ -53,6 +53,7 @@ int main(int argc, char **argv)
 	unsigned int line_number = 0;
 	char *line = NULL;
 	size_t len = 0;
+	int i = 0;
 	FILE *file;
 	stack_t **stack;
 
@@ -68,8 +69,14 @@ int main(int argc, char **argv)
 	*stack = NULL;
 	while ((getline(&line, &len, file) != EOF)) /* Line by line copy into line */
 	{
-		line_remove_count(&line_number, line);
-		ops_exe(stack, line, line_number, file);
+		while (line[i] == ' ')
+			i++;
+		if (line[i] != '#' && line[i] != '\0')
+		{
+			line_remove_count(&line_number, line);
+			ops_exe(stack, line, line_number, file);
+		}
+		i = 0;
 	}
 	clean_up(line, stack, file);
 	return (0);
