@@ -6,7 +6,7 @@
 #include <stdio.h>
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
- * @n: integerA
+ * @n: integer
  * @prev: points to the previous element of the stack (or queue)
  * @next: points to the next element of the stack (or queue)
  *
@@ -21,7 +21,7 @@ struct stack_s *next;
 } stack_t;
 
 /**
- * strAuct instruction_s - opcode and its function
+ * struct instruction_s - opcode and its function
  * @opcode: the opcode
  * @f: function to handle the opcode
  *
@@ -44,6 +44,7 @@ void pint(stack_t **stack, unsigned int line_number, char *line, FILE *file);
 void nop(stack_t **stack, unsigned int line_number, char *line, FILE *file);
 void _div(stack_t **stack, unsigned int line_number, char *line, FILE *file);
 void mul(stack_t **stack, unsigned int line_number, char *line, FILE *file);
+void mod(stack_t **stack, unsigned int line_number, char *line, FILE *file);
 void add(stack_t **stack, unsigned int line_number, char *line, FILE *file);
 void sub(stack_t **stack, unsigned int line_number, char *line, FILE *file);
 void nop(stack_t **stack, unsigned int line_number, char *line, FILE *file);

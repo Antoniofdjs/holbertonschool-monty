@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include "monty.h"
 
-
 /**
  * clean_up - free and close items used * @line: line from getline file
  * @stack: head of stack_t
@@ -53,7 +52,7 @@ void ops_exe(stack_t **stack, char *line, unsigned int line_number, FILE *file)
 
 	instruction_t instructions[] = {{"push", push}, {"pall", pall}, {"pop", pop},
 		{"add", add}, {"sub", sub}, {"div", _div}, {"nop", nop}, {"pint", pint},
-		{"swap", swap}, {"mul", mul}, {NULL, NULL}
+		{"swap", swap}, {"mul", mul}, {"mod", mod}, {NULL, NULL}
 	};
 
 	opcode = strtok(line, " ");
